@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_destination"
+        android:title="Destination"/>
+    <item
+        android:id="@+id/nav_camera"
+        android:title="Camera"/>
+    <item
+        android:id="@+id/nav_settings"
+        android:title="Settings"/>
+</menu>

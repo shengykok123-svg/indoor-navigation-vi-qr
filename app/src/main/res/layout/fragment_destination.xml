@@ -1,0 +1,60 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Top bar -->
+    <TextView
+        android:id="@+id/destinationTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Destination"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:padding="16dp" />
+
+    <!-- Split into left and right -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <!-- Left: Destination list -->
+        <ListView
+            android:id="@+id/destinationList"
+            android:layout_width="197dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:dividerHeight="1dp" />
+
+        <LinearLayout
+            android:id="@+id/splitButton"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="end"
+            android:layout_margin="8dp">
+
+            <!-- Select Prev -->
+            <Button
+                android:id="@+id/btnUp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="▲"
+                android:textSize="24sp"/>
+
+            <!-- Select Next -->
+            <Button
+                android:id="@+id/btnDown"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="▼"
+                android:textSize="24sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
