@@ -6,6 +6,19 @@ An Android prototype that guides visually impaired (VI) users through indoor env
 
 ---
 
+## The app in use
+
+| Map view | Destination stepper | Route ready | Navigation active |
+|:---:|:---:|:---:|:---:|
+| <img src="docs/images/ui-map.jpg" width="200"> | <img src="docs/images/ui-destination.jpg" width="200"> | <img src="docs/images/ui-route-ready.jpg" width="200"> | <img src="docs/images/ui-nav-active.jpg" width="200"> |
+| Floor plan with QR nodes; prompts the user to scan to set position | Linear up/down/confirm selection — no dropdown to see | Route computed, waiting on the large green start control | Red route overlay with live step and distance counters |
+
+![Field test — scanning a QR anchor mid-route](docs/images/field-test-scan.jpg)
+
+*Field testing in UTAR FICT Block N: the app has counted 12 steps (7.8 m) since the last anchor and is prompting for the QR code at TP006.*
+
+---
+
 ## Table of Contents
 
 - [Why this project](#why-this-project)
@@ -13,8 +26,10 @@ An Android prototype that guides visually impaired (VI) users through indoor env
 - [Key achievements](#key-achievements)
 - [System architecture](#system-architecture)
 - [How navigation works](#how-navigation-works)
+- [Field testing](#field-testing)
 - [Technical deep dive](#technical-deep-dive)
 - [Test environment and dataset](#test-environment-and-dataset)
+- [QR image enhancement research](#qr-image-enhancement-research)
 - [Repository structure](#repository-structure)
 - [Getting started](#getting-started)
 - [QR code payload format](#qr-code-payload-format)
@@ -119,42 +134,9 @@ The indoor graph is not hand-written. An annotated SVG floor plan of UTAR FICT B
 
 ## System architecture
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│  INPUT                                                          │
-│  Smartphone camera  ·  Touchscreen  ·  Accelerometer            │
-└────────────────────────┬────────────────────────────────────────┘
-                         │
-         ┌───────────────┴───────────────┐
-         ▼                               ▼
-┌──────────────────────┐      ┌──────────────────────────┐
-│ QR DETECTION         │      │ DESTINATION SELECTION    │
-│ CameraX + ML Kit     │      │ DestinationFragment      │
-│ barcode scanning     │      │ (accessible stepper)     │
-└──────────┬───────────┘      └────────────┬─────────────┘
-           │ node ID + location             │ destination
-           ▼                                ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  ROUTE GUIDANCE  —  SharedViewModel                             │
-│  · Dijkstra shortest path over weighted graph                   │
-│  · Turn generation via vector cross/dot product                 │
-│  · Route validation and live re-routing                         │
-└────────────────────────┬────────────────────────────────────────┘
-                         ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  HYBRID POSITION TRACKING  —  NavigationModule                  │
-│  · Adaptive peak-detection step counter                         │
-│  · QR-search-mode filtering                                     │
-│  · Confidence-weighted stride calibration                       │
-│  · Segment progression + drift correction on each QR fix        │
-└────────────────────────┬────────────────────────────────────────┘
-                         ▼
-┌─────────────────────────────────────────────────────────────────┐
-│  OUTPUT                                                         │
-│  Android TTS → speaker   ·   RouteMapView (SVG + route overlay) │
-│  TTSMessageManager (on-screen mirror of every spoken message)   │
-└─────────────────────────────────────────────────────────────────┘
-```
+![System architecture diagram](docs/images/system-architecture.png)
+
+The camera and touchscreen feed the central **System** coordinator. Captured frames pass through image preprocessing into ML Kit's QR detection and decode modules, which return a node ID and location name. That position, combined with the destination from the touchscreen, drives the **Route Guidance Module** — the hybrid indoor navigation engine. Every instruction it produces is converted by the **Text-to-Speech converter** and delivered through the speaker alongside the on-screen UI.
 
 ### Module responsibilities
 
@@ -175,54 +157,41 @@ The indoor graph is not hand-written. An annotated SVG floor plan of UTAR FICT B
 
 ## How navigation works
 
-```
-          ┌──────────────────────────┐
-          │  Is current location     │
-          │  known?                  │
-          └────┬────────────────┬────┘
-            No │                │ Yes
-               ▼                ▼
-      ┌─────────────────┐  ┌──────────────────────┐
-      │ Prompt: scan a  │  │ Prompt: choose a     │
-      │ QR code         │  │ destination          │
-      └────────┬────────┘  └──────────┬───────────┘
-               │                      │
-               ▼                      ▼
-      ┌─────────────────┐  ┌──────────────────────────────┐
-      │ ML Kit decodes  │  │ Dijkstra → shortest path     │
-      │ {location, ID}  │  │ Generate turn instructions   │
-      └────────┬────────┘  │ Estimate steps to next node  │
-               │           └──────────────┬───────────────┘
-               │                          ▼
-               │           ┌──────────────────────────────┐
-               │           │ Speak: initial orientation   │
-               │           │ ("turn around", "go straight")│
-               │           └──────────────┬───────────────┘
-               │                          ▼
-               │           ┌──────────────────────────────┐
-               │           │ PDR counts filtered steps    │
-               │           │ toward segment target        │
-               │           └──────────────┬───────────────┘
-               │                          ▼
-               │           ┌──────────────────────────────┐
-               └──────────▶│ Segment target reached:      │
-                           │ prompt QR scan (anchor) OR   │
-                           │ auto-advance on PDR estimate │
-                           └──────────────┬───────────────┘
-                                          ▼
-                           ┌──────────────────────────────┐
-                           │ QR scanned → correct drift,  │
-                           │ recalibrate stride, reroute  │
-                           │ if position unexpected       │
-                           └──────────────┬───────────────┘
-                                          ▼
-                           ┌──────────────────────────────┐
-                           │ Destination reached →        │
-                           │ announce success, stop       │
-                           └──────────────────────────────┘
-```
+<p align="center"><img src="docs/images/system-flow.png" width="620" alt="System flow diagram"></p>
 
 The loop is the important part: **periodic QR scans act as position anchors that correct cumulative PDR error**, and PDR keeps the user moving when a scan is not possible.
+
+If the current location is unknown, the user is asked to scan a QR code. If it is known, they are asked for a destination; the route is computed and the PDR module estimates the steps to the next node. A scanned code that matches the destination ends navigation with a success message; any other code updates position and recalculates the route. The cycle repeats until arrival.
+
+### QR code reader sub-process
+
+<p align="center"><img src="docs/images/qr-reader-flowchart.png" width="330" alt="QR code reader flowchart"></p>
+
+Each frame is scanned for a QR code, its content read and parsed as JSON. Valid payloads have their location, node ID and directions displayed and spoken; invalid ones produce an `Invalid QR code format` message instead of a crash.
+
+## Field testing
+
+The prototype was walked end-to-end through UTAR FICT Block N, covering the normal case and both fallback cases.
+
+![Field test — PDR fallback when the QR code cannot be scanned](docs/images/field-test-pdr-fallback.jpg)
+
+*The fallback case that motivated the hybrid design: the user cannot scan the target QR code. PDR has tracked 19 steps / 12.4 m since the last anchor, so guidance continues toward TP007 instead of stalling.*
+
+Scenarios exercised:
+
+| Scenario | What it validates |
+|---|---|
+| **Normal case** — Main Entrance → NGT4&5 Toilet | End-to-end routing, turn instructions, QR anchoring at each node |
+| **PDR fallback** — target QR code unreachable | Navigation continues on step estimation alone; segment auto-advances |
+| **Virtual point** — node with no physical QR code | Turning points with no printed anchor are traversed by PDR only |
+
+### Route guidance module validation
+
+Before PDR was integrated, the routing core was validated standalone — selecting a start and destination, computing the path, and rendering it over the floor plan with the generated instruction list.
+
+<p align="center"><img src="docs/images/route-guidance-test.jpg" width="330" alt="Route guidance module test output"></p>
+
+*Main Entrance → NGT4&5_Toilet: four segments, turn-by-turn instructions, total distance 352.96 units. The red overlay is the computed shortest path.*
 
 ## Technical deep dive
 
@@ -253,6 +222,10 @@ accelerometer (x,y,z)
 
 The prototype is mapped to the **ground floor of UTAR FICT Block N (Kampar campus)**.
 
+![Annotated floor plan with QR node positions](docs/images/floor-plan-nodes.png)
+
+*The annotated SVG floor plan. Blue markers are QR node positions with their IDs; orange labels are the named destinations (N007, N001, N009, N012, NGT4&5 Toilet, Main Entrance). Node pixel coordinates are read off this plan and become the graph's `x`/`y` values.*
+
 | Metric | Value |
 |---|---|
 | Graph nodes | 29 |
@@ -266,6 +239,26 @@ The prototype is mapped to the **ground floor of UTAR FICT Block N (Kampar campu
 Selectable destinations: `Main Entrance`, `NG-026`, `NG-033`, `NG-005`, `N007A`, `N007B`, `NGT4&5_Toilet`, `N012A`, `N012B`, `N001A`, `N001B`, `N009A`, `N009B`.
 
 Each node carries an ID, display name, type (`QR Node` / `Turning Point`), `x`/`y` coordinates, a `facing` direction (`Up`/`Down`/`Left`/`Right`/`None`), and its adjacency list.
+
+## QR image enhancement research
+
+> **Not part of this repository.** The models below were trained and evaluated standalone in Python and are **not** integrated into this Android app, which relies on ML Kit's native detection. They are documented here because they motivate the future work.
+
+ML Kit is fast and easy to integrate, but its detection degrades in low light and on physically damaged or warped codes. Two lightweight models were trained on 1,000 synthetic image pairs each and exported via TorchScript for eventual mobile deployment.
+
+**Low-light enhancement — simple CNN (encoder–decoder, 10 epochs, L1 loss, Adam):**
+
+![Low-light enhancement result](docs/images/lle-enhancement.png)
+
+The model restores brightness and suppresses Gaussian noise, returning a degraded capture to a state ML Kit can decode.
+
+**Geometric restoration — U-Net (20 epochs, sinusoidal warp + noise + random occlusion):**
+
+![U-Net warped QR restoration result](docs/images/unet-restoration.png)
+
+The U-Net reconstructs a sinusoidally warped and partially occluded code back to a decodable pattern.
+
+Both were evaluated on synthetic data only. Validating them against real-world backgrounds, and measuring their on-device inference cost, is the first item of [future work](#future-work).
 
 ## Repository structure
 
@@ -306,6 +299,7 @@ Each node carries an ID, display name, type (`QR Node` / `Turning Point`), `x`/`
 │   ├── FICT_Ground_Floor_Plan.png             # source floor plan
 │   ├── Ground_Coordinates.svg                 # coordinate-annotated plan
 │   └── fict_gfloorplan1.svg                   # SVG used for in-app rendering
+├── docs/images/                               # figures used in this README
 ├── gradle/
 │   ├── libs.versions.toml
 │   └── wrapper/
