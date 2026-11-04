@@ -36,6 +36,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true // Enable view binding for traditional layouts
     }
 }
 
@@ -58,13 +59,13 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // Core
+    // Core Android Libraries
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    // CameraX stable latest (1.3.4 as of 2025)
+    // CameraX Dependencies
     implementation("androidx.camera:camera-core:1.3.4")
     implementation("androidx.camera:camera-camera2:1.3.4")
     implementation("androidx.camera:camera-lifecycle:1.3.4")
@@ -72,7 +73,6 @@ dependencies {
 
     // ML Kit Barcode Scanning
     implementation("com.google.mlkit:barcode-scanning:17.2.0")
-
 
     // Jetpack Compose
     implementation(platform("androidx.compose:compose-bom:2024.04.01"))
@@ -86,22 +86,51 @@ dependencies {
     implementation("androidx.compose.ui:ui-unit")
     implementation("androidx.compose.ui:ui-tooling-preview")
     debugImplementation("androidx.compose.ui:ui-tooling")
+
+    // Activity and Navigation
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.0")
-
-    // Activity Result API
     implementation("androidx.activity:activity-ktx:1.7.2")
-
-    // Testing
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("androidx.navigation:navigation-compose:2.8.0")
-    implementation("androidx.navigation:navigation-compose:2.5.3")
 
+    // Fragment and ViewModel Support
     implementation("androidx.fragment:fragment-ktx:1.8.4")
-    implementation("com.caverock:androidsvg:1.4")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.4")
 
+    // SVG Support for Map Display
+    implementation("com.caverock:androidsvg:1.4")
+
+    // ===== PDR NAVIGATION DEPENDENCIES =====
+
+    // JSON Parsing for Map Data
+    implementation("com.google.code.gson:gson:2.10.1")
+
+    // Math and Algorithms Support
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+    // Permission Handling
+    implementation("androidx.activity:activity-ktx:1.8.0") // Already included above
+
+    // ===== OPTIONAL ENHANCEMENTS =====
+
+    // For enhanced data processing and filtering
+    implementation("org.apache.commons:commons-math3:3.6.1")
+
+    // For advanced logging and debugging
+    implementation("com.jakewharton.timber:timber:5.0.1")
+
+    // For improved performance monitoring
+    implementation("androidx.benchmark:benchmark-common:1.2.2")
+
+    // Testing Dependencies
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // Testing for PDR Navigation
+    testImplementation("org.mockito:mockito-core:5.7.0")
+    testImplementation("org.mockito:mockito-inline:5.2.0")
+    androidTestImplementation("androidx.test:rules:1.5.0")
+    androidTestImplementation("androidx.test:runner:1.5.2")
 }

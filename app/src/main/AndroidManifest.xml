@@ -5,11 +5,9 @@
     <!-- Camera permission for scanning -->
     <uses-permission android:name="android.permission.CAMERA" />
 
-    <!-- Optional: Internet permission if QR contains a URL -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
 
-    <!-- Optional: Phone permission if QR contains phone numbers -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 
     <!-- Camera hardware requirements -->
     <uses-feature

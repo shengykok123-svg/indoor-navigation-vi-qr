@@ -209,8 +209,8 @@
   "QR17": {
     "name": "NG-026",
     "type": "QR Node",
-    "x": 33.375,
-    "y": 83.984,
+    "x": 35.635,
+    "y": 113.479,
     "facing":"Right",
     "connections": [
       "QR2",

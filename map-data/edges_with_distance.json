@@ -1,0 +1,232 @@
+[
+  {
+    "from": "QR1",
+    "to": "QR2",
+    "distance": 5.98
+  },
+  {
+    "from": "QR1",
+    "to": "QR4",
+    "distance": 3.065
+  },
+  {
+    "from": "QR2",
+    "to": "QR3",
+    "distance": 5.162
+  },
+  {
+    "from": "QR2",
+    "to": "QR5",
+    "distance": 2.889
+  },
+  {
+    "from": "QR2",
+    "to": "QR17",
+    "distance": 0.432
+  },
+  {
+    "from": "QR3",
+    "to": "QR6",
+    "distance": 3.098
+  },
+  {
+    "from": "QR3",
+    "to": "QR17",
+    "distance": 4.767
+  },
+  {
+    "from": "QR3",
+    "to": "QR18",
+    "distance": 2.29
+  },
+  {
+    "from": "QR4",
+    "to": "QR5",
+    "distance": 6.092
+  },
+  {
+    "from": "QR4",
+    "to": "QR7",
+    "distance": 24.312
+  },
+  {
+    "from": "QR4",
+    "to": "QR19",
+    "distance": 14.82
+  },
+  {
+    "from": "QR5",
+    "to": "QR6",
+    "distance": 4.839
+  },
+  {
+    "from": "QR5",
+    "to": "QR17",
+    "distance": 3.039
+  },
+  {
+    "from": "QR6",
+    "to": "QR9",
+    "distance": 21.906
+  },
+  {
+    "from": "QR6",
+    "to": "QR18",
+    "distance": 0.928
+  },
+  {
+    "from": "QR7",
+    "to": "QR8",
+    "distance": 5.771
+  },
+  {
+    "from": "QR7",
+    "to": "QR19",
+    "distance": 9.503
+  },
+  {
+    "from": "QR8",
+    "to": "QR9",
+    "distance": 2.473
+  },
+  {
+    "from": "QR8",
+    "to": "QR10",
+    "distance": 12.354
+  },
+  {
+    "from": "QR8",
+    "to": "QR20",
+    "distance": 4.331
+  },
+  {
+    "from": "QR8",
+    "to": "QR21",
+    "distance": 9.718
+  },
+  {
+    "from": "QR9",
+    "to": "QR29",
+    "distance": 10.952
+  },
+  {
+    "from": "QR10",
+    "to": "QR29",
+    "distance": 5.107
+  },
+  {
+    "from": "QR10",
+    "to": "QR13",
+    "distance": 21.244
+  },
+  {
+    "from": "QR10",
+    "to": "QR20",
+    "distance": 8.139
+  },
+  {
+    "from": "QR10",
+    "to": "QR21",
+    "distance": 2.669
+  },
+  {
+    "from": "QR11",
+    "to": "QR10",
+    "distance": 4.958
+  },
+  {
+    "from": "QR11",
+    "to": "QR14",
+    "distance": 21.209
+  },
+  {
+    "from": "QR11",
+    "to": "QR29",
+    "distance": 1.175
+  },
+  {
+    "from": "QR11",
+    "to": "QR27",
+    "distance": 1.79
+  },
+  {
+    "from": "QR11",
+    "to": "QR28",
+    "distance": 8.895
+  },
+  {
+    "from": "QR12",
+    "to": "QR13",
+    "distance": 2.767
+  },
+  {
+    "from": "QR13",
+    "to": "QR14",
+    "distance": 6.286
+  },
+  {
+    "from": "QR13",
+    "to": "QR15",
+    "distance": 21.696
+  },
+  {
+    "from": "QR13",
+    "to": "QR25",
+    "distance": 18.081
+  },
+  {
+    "from": "QR14",
+    "to": "QR16",
+    "distance": 21.655
+  },
+  {
+    "from": "QR14",
+    "to": "QR27",
+    "distance": 19.427
+  },
+  {
+    "from": "QR14",
+    "to": "QR28",
+    "distance": 12.317
+  },
+  {
+    "from": "QR14",
+    "to": "QR23",
+    "distance": 9.84
+  },
+  {
+    "from": "QR14",
+    "to": "QR24",
+    "distance": 17.539
+  },
+  {
+    "from": "QR15",
+    "to": "QR16",
+    "distance": 4.909
+  },
+  {
+    "from": "QR15",
+    "to": "QR25",
+    "distance": 3.625
+  },
+  {
+    "from": "QR15",
+    "to": "QR26",
+    "distance": 1.599
+  },
+  {
+    "from": "QR16",
+    "to": "QR23",
+    "distance": 11.817
+  },
+  {
+    "from": "QR16",
+    "to": "QR24",
+    "distance": 4.118
+  },
+  {
+    "from": "QR22",
+    "to": "QR29",
+    "distance": 1.141
+  }
+]

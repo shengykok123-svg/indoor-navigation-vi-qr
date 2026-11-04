@@ -1,60 +1,81 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <!-- Top bar -->
+    <!-- Top bar: destination title -->
     <TextView
         android:id="@+id/destinationTitle"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Destination"
         android:textStyle="bold"
-        android:textSize="20sp"
-        android:padding="16dp" />
+        android:textSize="@dimen/title_text_size"
+        android:padding="@dimen/title_padding"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Split into left and right -->
+    <!-- Current selection text -->
+    <TextView
+        android:id="@+id/currentSelectionText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Current selection: TP001"
+        android:textSize="@dimen/selection_text_size"
+        android:padding="@dimen/selection_padding"
+        app:layout_constraintTop_toBottomOf="@id/destinationTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Navigation buttons container - uses constraint height to fill available space -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/navButtonContainer"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/nav_container_padding"
+        app:layout_constraintTop_toBottomOf="@id/currentSelectionText"
+        app:layout_constraintBottom_toTopOf="@id/btnConfirm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Left: Destination list -->
-        <ListView
-            android:id="@+id/destinationList"
-            android:layout_width="197dp"
+        <Button
+            android:id="@+id/btnUp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:dividerHeight="1dp" />
+            android:layout_weight="1"
+            android:text="◀"
+            android:textSize="@dimen/arrow_text_size"
+            android:minHeight="@dimen/min_touch_target"
+            android:layout_marginEnd="@dimen/button_spacing"/>
 
-        <LinearLayout
-            android:id="@+id/splitButton"
-            android:layout_width="200dp"
+        <Button
+            android:id="@+id/btnDown"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_gravity="end"
-            android:layout_margin="8dp">
-
-            <!-- Select Prev -->
-            <Button
-                android:id="@+id/btnUp"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="▲"
-                android:textSize="24sp"/>
-
-            <!-- Select Next -->
-            <Button
-                android:id="@+id/btnDown"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:text="▼"
-                android:textSize="24sp"/>
-        </LinearLayout>
-
+            android:layout_weight="1"
+            android:text="▶"
+            android:textSize="@dimen/arrow_text_size"
+            android:minHeight="@dimen/min_touch_target"
+            android:layout_marginStart="@dimen/button_spacing"/>
     </LinearLayout>
-</LinearLayout>
+
+    <!-- Bottom: confirm button -->
+    <Button
+        android:id="@+id/btnConfirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/confirm_button_height"
+        android:layout_margin="@dimen/confirm_margin"
+        android:text="Confirm Selection"
+        android:textSize="@dimen/confirm_text_size"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,353 @@
+{
+  "QR1": {
+    "name": "TP001",
+    "type": "Turning Point",
+    "x": 30.547,
+    "y": 39.052,
+    "facing":"Right",
+    "connections": [
+      "QR2",
+      "QR4"
+    ]
+  },
+  "QR2": {
+    "name": "TP002",
+    "type": "Turning Point",
+    "x": 36.656,
+    "y": 108.542,
+    "facing":"Right",
+    "connections": [
+      "QR1",
+      "QR3",
+      "QR5",
+      "QR17"
+    ]
+  },
+  "QR3": {
+    "name": "TP003",
+    "type": "Turning Point",
+    "x": 48.37,
+    "y": 167.609,
+    "facing":"Up",
+    "connections": [
+      "QR2",
+      "QR6",
+      "QR17",
+      "QR18"
+    ]
+  },
+  "QR4": {
+    "name": "TP004",
+    "type": "Turning Point",
+    "x": 66.042,
+    "y": 34.807,
+    "facing":"Down",
+    "connections": [
+      "QR1",
+      "QR5",
+      "QR7",
+      "QR19"
+    ]
+  },
+  "QR5": {
+    "name": "TP005",
+    "type": "Turning Point",
+    "x": 70.234,
+    "y": 105.745,
+    "facing":"None",
+    "connections": [
+      "QR2",
+      "QR4",
+      "QR6",
+      "QR17"
+    ]
+  },
+  "QR6": {
+    "name": "TP006",
+    "type": "Turning Point",
+    "x": 83.807,
+    "y": 160.531,
+    "facing":"Up",
+    "connections": [
+      "QR3",
+      "QR5",
+      "QR9",
+      "QR18"
+    ]
+  },
+  "QR7": {
+    "name": "TP007",
+    "type": "Turning Point",
+    "x": 349.562,
+    "y": 40.922,
+    "facing":"Left",
+    "connections": [
+      "QR4",
+      "QR8",
+      "QR19"
+    ]
+  },
+  "QR8": {
+    "name": "TP008",
+    "type": "Turning Point",
+    "x": 337.526,
+    "y": 107.151,
+    "facing":"None",
+    "connections": [
+      "QR7",
+      "QR9",
+      "QR10",
+      "QR20",
+      "QR21"
+    ]
+  },
+  "QR9": {
+    "name": "TP009",
+    "type": "Turning Point",
+    "x": 338.146,
+    "y": 135.995,
+    "facing":"Up",
+    "connections": [
+      "QR8",
+      "QR29"
+    ]
+  },
+  "QR10": {
+    "name": "TP010",
+    "type": "Turning Point",
+    "x": 479.521,
+    "y": 82.573,
+    "facing":"Down",
+    "connections": [
+      "QR8",
+      "QR29",
+      "QR13",
+      "QR20",
+      "QR21"
+    ]
+  },
+  "QR11": {
+    "name": "TP011",
+    "type": "Turning Point",
+    "x": 479.521,
+    "y": 140.401,
+    "facing":"Up",
+    "connections": [
+      "QR10",
+      "QR14",
+      "QR29",
+      "QR27",
+      "QR28"
+    ]
+  },
+  "QR12": {
+    "name": "Main Entrance",
+    "type": "Turning Point",
+    "x": 726.906,
+    "y": 35.948,
+    "facing":"Right",
+    "connections": [
+      "QR13"
+    ]
+  },
+  "QR13": {
+    "name": "TP013",
+    "type": "Turning Point",
+    "x": 726.906,
+    "y": 68.219,
+    "facing":"Up",
+    "connections": [
+      "QR12",
+      "QR10",
+      "QR14",
+      "QR15",
+      "QR25"
+    ]
+  },
+  "QR14": {
+    "name": "TP014",
+    "type": "Turning Point",
+    "x": 726.906,
+    "y": 141.547,
+    "facing":"Up",
+    "connections": [
+      "QR13",
+      "QR11",
+      "QR16",
+      "QR27",
+      "QR28",
+      "QR23",
+      "QR24"
+    ]
+  },
+  "QR15": {
+    "name": "TP015",
+    "type": "Turning Point",
+    "x": 979.505,
+    "y": 83.734,
+    "facing":"Down",
+    "connections": [
+      "QR13",
+      "QR16",
+      "QR25",
+      "QR26"
+    ]
+  },
+  "QR16": {
+    "name": "TP016",
+    "type": "Turning Point",
+    "x": 979.505,
+    "y": 141.0,
+    "facing":"Up",
+    "connections": [
+      "QR15",
+      "QR14",
+      "QR23",
+      "QR24"
+    ]
+  },
+  "QR17": {
+    "name": "NG-026",
+    "type": "QR Node",
+    "x": 35.635,
+    "y": 113.479,
+    "facing":"Right",
+    "connections": [
+      "QR2",
+      "QR3",
+      "QR5"
+    ]
+  },
+  "QR18": {
+    "name": "NG-033",
+    "type": "QR Node",
+    "x": 75.078,
+    "y": 166.938,
+    "facing":"Up",
+    "connections": [
+      "QR3",
+      "QR6"
+    ]
+  },
+  "QR19": {
+    "name": "NG-005",
+    "type": "QR Node",
+    "x": 238.911,
+    "y": 34.312,
+    "facing":"Down",
+    "connections": [
+      "QR4",
+      "QR7"
+    ]
+  },
+  "QR20": {
+    "name": "N007A",
+    "type": "QR Node",
+    "x": 384.833,
+    "y": 89.411,
+    "facing":"Down",
+    "connections": [
+      "QR8",
+      "QR10"
+    ]
+  },
+  "QR21": {
+    "name": "N007B",
+    "type": "QR Node",
+    "x": 448.401,
+    "y": 83.583,
+    "facing":"Down",
+    "connections": [
+      "QR8",
+      "QR10"
+    ]
+  },
+  "QR22": {
+    "name": "NGT4&5_Toilet",
+    "type": "QR Node",
+    "x": 465.307,
+    "y": 153.854,
+    "facing":"Up",
+    "connections": [
+      "QR29"
+    ]
+  },
+  "QR23": {
+    "name": "N012A",
+    "type": "QR Node",
+    "x": 841.677,
+    "y": 142.927,
+    "facing":"Up",
+    "connections": [
+      "QR14",
+      "QR16"
+    ]
+  },
+  "QR24": {
+    "name": "N012B",
+    "type": "QR Node",
+    "x": 931.49,
+    "y": 142.474,
+    "facing":"Up",
+    "connections": [
+      "QR14",
+      "QR16"
+    ]
+  },
+  "QR25": {
+    "name": "N001A",
+    "type": "QR Node",
+    "x": 937.562,
+    "y": 78.406,
+    "facing":"Down",
+    "connections": [
+      "QR13",
+      "QR15"
+    ]
+  },
+  "QR26": {
+    "name": "N001B",
+    "type": "QR Node",
+    "x": 998.151,
+    "y": 83.854,
+    "facing":"Down",
+    "connections": [
+      "QR15"
+    ]
+  },
+  "QR27": {
+    "name": "N009A",
+    "type": "QR Node",
+    "x": 500.297,
+    "y": 142.474,
+    "facing":"Up",
+    "connections": [
+      "QR11",
+      "QR14"
+    ]
+  },
+  "QR28": {
+    "name": "N009B",
+    "type": "QR Node",
+    "x": 583.245,
+    "y": 142.807,
+    "facing":"Up",
+    "connections": [
+      "QR11",
+      "QR14"
+    ]
+  },
+  "QR29": {
+    "name": "TP017",
+    "type": "Turning Point",
+    "x": 465.82,
+    "y": 140.55,
+    "facing":"None",
+    "connections": [
+      "QR9",
+      "QR10",
+      "QR11",
+      "QR22"
+    ]
+  }
+}

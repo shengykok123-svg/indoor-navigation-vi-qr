@@ -1,15 +1,22 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
+# Gradle
+.gradle/
+build/
 /captures
 .externalNativeBuild
 .cxx
+
+# Local configuration (contains machine-specific SDK path)
 local.properties
+
+# IDE
+*.iml
+.idea/
+.kotlin/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc

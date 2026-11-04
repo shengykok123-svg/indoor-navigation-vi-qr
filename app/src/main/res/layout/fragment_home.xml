@@ -1,29 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Instructions Box -->
+    <!-- Current Location & Destination Banner (Yellow/Orange) -->
     <TextView
-        android:id="@+id/instructionBox"
+        android:id="@+id/currentLocationBanner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/teal_200"
-        android:text="Instructions go here"
-        android:textSize="18sp"
-        android:padding="12dp"
+        android:background="@android:color/holo_orange_light"
+        android:text="From: Not Set → To: No destination selected"
+        android:textSize="@dimen/banner_text_size"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:padding="@dimen/banner_padding"
         android:textAlignment="center"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeMaxTextSize="@dimen/banner_text_size"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Fragment container -->
+    <!-- Navigation Instructions Box (Blue) -->
+    <TextView
+        android:id="@+id/navigationStatusBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_light"
+        android:text="Select destination and scan QR code to start navigation"
+        android:textSize="@dimen/instruction_text_size"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:padding="@dimen/instruction_padding"
+        android:textAlignment="center"
+        android:minHeight="@dimen/min_touch_target"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeMaxTextSize="@dimen/instruction_text_size"
+        app:layout_constraintTop_toBottomOf="@id/currentLocationBanner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- Step Count and Distance Display -->
+    <LinearLayout
+        android:id="@+id/stepDistanceLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/holo_green_light"
+        android:padding="@dimen/stats_padding"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/navigationStatusBox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Total Journey Stats -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/totalStepCountDisplay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total: 0 steps"
+                android:textSize="@dimen/stats_text_size"
+                android:textColor="@android:color/white"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/totalDistanceDisplay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total: 0.0m"
+                android:textSize="@dimen/stats_text_size"
+                android:textColor="@android:color/white"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <!-- Current Segment Stats -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/stats_spacing">
+
+            <TextView
+                android:id="@+id/segmentStepCountDisplay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Segment: 0 steps"
+                android:textSize="@dimen/stats_small_text_size"
+                android:textColor="@android:color/white"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/segmentDistanceDisplay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Segment: 0.0m"
+                android:textSize="@dimen/stats_small_text_size"
+                android:textColor="@android:color/white"
+                android:gravity="center" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Map View (Default) -->
+    <com.example.finalprototype.RouteMapView
+        android:id="@+id/routeMapView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:minHeight="0dp"
+        app:layout_constraintTop_toBottomOf="@id/stepDistanceLayout"
+        app:layout_constraintBottom_toTopOf="@id/ttsMessageDisplay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_bias="0.5"/>
+
+    <!-- Fragment Container (Hidden by default) -->
     <FrameLayout
         android:id="@+id/homeFragmentContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/instructionBox"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/stepDistanceLayout"
+        app:layout_constraintBottom_toTopOf="@id/ttsMessageDisplay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- TTS Message Display -->
+    <TextView
+        android:id="@+id/ttsMessageDisplay"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/teal_700"
+        android:text=""
+        android:textSize="@dimen/tts_text_size"
+        android:textColor="@android:color/white"
+        android:padding="@dimen/tts_padding"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:alpha="0"
+        android:maxLines="3"
+        android:ellipsize="end"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -36,9 +167,10 @@
         android:background="?android:attr/windowBackground"
         app:menu="@menu/bottom_nav_menu"
         app:labelVisibilityMode="labeled"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
